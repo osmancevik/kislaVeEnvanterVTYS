@@ -1,0 +1,11 @@
+-- Adresi 'Ankara, Türkiye' , Tedarikçi Türü 'Silah' veya 'Ekipman' olan tedarikçilerin adını, telefon numarasını ve emailini getiren kod. 
+
+SELECT 
+    tedarikciAdi, 
+    telefonNo, 
+    email
+FROM 
+    Tedarikci
+WHERE 
+    adres = 'Ankara, Türkiye'
+    AND tedarikciTuru IN ('Silah', 'Ekipman');

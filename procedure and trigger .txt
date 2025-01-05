@@ -1,0 +1,158 @@
+---- prosedure 1 --------
+CREATE PROCEDURE ListeleOrtakTurler
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        e.*
+    FROM 
+        envanter e
+    INNER JOIN 
+        lojistik l
+    ON 
+        e.malzemeTuru = l.lojistikTuru;
+END;
+EXEC ListeleOrtakTurler;
+
+--- prosedure 2 ---------------
+
+
+CREATE PROCEDURE ListLojistikAndKıslaEquals
+    @Tur VARCHAR(50),
+    @idx INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        e.*
+    FROM 
+        envanter e
+    INNER JOIN 
+        lojistik l
+    ON 
+        e.malzemeTuru = l.lojistikTuru 
+		AND e.kislaID=l.kislaID
+	
+    WHERE 
+        e.malzemeTuru = @Tur 
+		AND e.kislaID=@idx;
+END;
+-----------------prosedür 3 ------------------------------- 
+-----------istedigin kışladaki egitimlari görebilirsin-------------- 
+
+CREATE PROCEDURE GetEgitimKislaDetails
+@KislaID INT
+ AS 
+ BEGIN 
+	SELECT 
+	   e.egitimAdi,      
+       p.adSoyad,     
+       k.kislaAdi 
+	   FROM 
+	   egitim e
+	   JOIN
+	   personel p ON e.personelID=p.personelID
+	   JOIN
+	   kisla K on p.kislaID=k.kislaID
+	   WHERE
+	   k.kislaID=@KislaID
+	   ORDER BY
+	   e.egitimAdi
+	   END
+      EXEC GetEgitimKislaDetails @KislaID=5
+      -------------------------- prosdür 4 
+      CREATE PROCEDURE GetEgitimAdıKislaDetails
+@EgitimAdı VARCHAR(50)
+ AS 
+ BEGIN 
+	SELECT 
+	   e.egitimAdi,      
+       p.adSoyad,     
+       k.kislaAdi 
+	   FROM 
+	   egitim e
+	   JOIN
+	   personel p ON e.personelID=p.personelID
+	   JOIN
+	   kisla K on p.kislaID=k.kislaID
+	   WHERE
+	   e.egitimAdi=@EgitimAdı
+	   END
+
+-------------------Lojistikte  bir ürün geldiginde envanterdeki miktar otomatik artar eger o ürün hiç yoksa otomatik ekleme yapar   -------------------------------------
+CREATE TRIGGER trg_LojistikInsert
+ON lojistik
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Envanter tablosuna ürün ekleme işlemi
+    INSERT INTO envanter (malzemeTuru, kislaID,miktar,malzemeAdi)
+    SELECT 
+        i.lojistikTuru, 
+        i.miktar, 
+        i.kislaID,
+	
+		i.lojistikAdi
+    FROM 
+        inserted i
+    WHERE 
+        NOT EXISTS (
+            SELECT 1 
+            FROM envanter e 
+            WHERE e.malzemeTuru = i.lojistikTuru
+			AND e.kislaID = i.kislaID
+			AND i.miktar=e.miktar 
+			AND  e.malzemeAdi=i.lojistikAdi
+        );
+
+
+    -- Eğer ürün zaten varsa, miktarı güncelle
+    UPDATE e
+    SET 
+        e.miktar = e.miktar + i.miktar
+    FROM 
+        envanter e
+    INNER JOIN 
+        inserted i
+    ON 
+        e.malzemeTuru = i.lojistikTuru AND e.kislaID = i.kislaID;
+END;
+INSERT INTO lojistik (lojistikID,lojistikTuru, miktar, kislaID, lojistikAdi,tedarikciID,teslimTarihi)
+VALUES ('silah', 10, 1, 'Tüfek',1,GETDATE());
+------------------ disiplin cezası olan  personelin izin almasın engellenmesi -----------------
+CREATE TRIGGER CheckDisiplinBeforeIzin
+ON izin
+AFTER INSERT
+AS
+BEGIN
+    DECLARE @personelID INT;
+
+
+    SELECT @personelID = personelID FROM inserted;
+
+    IF EXISTS (SELECT 1 FROM disiplin WHERE personelID = @personelID)
+    BEGIN
+        DELETE FROM izin WHERE personelID = @personelID;
+        
+        RAISERROR ('Disiplin cezası olan personel izin alamaz!', 16, 1);
+    END
+END;
+----------------saglıklı olan  personellerin  egitime alınması digerlerinin alınmaması-------------
+
+CREATE TRIGGER CheckHealthBeforeEgitim
+ON egitim 
+AFTER INSERT 
+AS
+ BEGIN 
+ DECLARE @personelID INT 
+ SELECT @personelID=personelID FROM inserted;
+   IF NOT EXISTS (SELECT 1 FROM saglik WHERE personelID = @personelID AND saglikDurumu = 'Saglıklı')
+    BEGIN
+        DELETE FROM egitim WHERE personelID = @personelID;
+        RAISERROR ('Sağlık durumu uygun olmayan personel eğitim alamaz!', 16, 1);
+    END
+END;

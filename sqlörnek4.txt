@@ -1,0 +1,24 @@
+-- Marmara, İç Anadolu ve Doğu Anadolu bölgelerindeki kışlalarda görev yapan rütbesi Albay, Yarbay veya Binbaşı olan personelin ID'sini, ad soyadını, izin bilgilerini ve katıldığı tatbikatların detaylarını getirir.
+
+SELECT 
+    p.personelID AS PersonelID,
+    p.adSoyad AS PersonelAdSoyad,
+    i.izinBaslangic AS IzinBaslangic,
+    i.izinBitis AS IzinBitis,
+    i.izinSebebi AS IzinSebebi,
+    t.tatbikatAdi AS TatbikatAdi,
+    t.baslangicTarihi AS TatbikatBaslangic,
+    t.bitisTarihi AS TatbikatBitis
+FROM 
+    Personel p
+JOIN 
+    kisla k ON p.kislaID = k.kislaID
+JOIN 
+    İzin i ON p.personelID = i.personelID
+JOIN 
+    Katıldığı kt ON p.personelID = kt.personelID
+JOIN 
+    Tatbikat t ON kt.tatbikatID = t.tatbikatID
+WHERE 
+    p.rutbe IN ('Albay', 'Yarbay', 'Binbaşı')
+    AND k.kislaBolge IN ('Marmara', 'İç Anadolu', 'Doğu Anadolu');

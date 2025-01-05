@@ -1,0 +1,15 @@
+-- Rütbesi yarbay olan personellerin verdiği eğitimlerin adını ve bu personelin sağlık durumunu getiren kod.
+
+SELECT 
+    e.egitimAdi, 
+    s.saglikDurumu
+FROM 
+    Verilen v
+JOIN 
+    Personel p ON v.personelID = p.personelID
+JOIN 
+    egitim e ON v.egitimID = e.egitimID
+JOIN 
+    saglik s ON p.personelID = s.personelID
+WHERE 
+    p.rutbe = 'Yarbay';

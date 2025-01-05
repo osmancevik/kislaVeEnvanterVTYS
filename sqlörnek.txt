@@ -1,0 +1,12 @@
+-- Kışla bölgesi Marmara olan kışlalardaki görevli olan Albayların ad soyadını ve görevini getiren kod.
+
+SELECT 
+    p.adSoyad, 
+    p.gorev
+FROM 
+    Personel p
+JOIN 
+    kisla k ON p.kislaID = k.kislaID
+WHERE 
+    k.kislaBolge = 'Marmara'
+    AND p.rutbe = 'Albay';

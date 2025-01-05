@@ -1,0 +1,606 @@
+
+CREATE DATABASE KislaYonetim;
+GO
+
+USE KislaYonetim;
+GO
+
+-- TEDARİKÇİ TABLOSU BAŞLANGIÇ
+
+-- Tedarikci tablosu oluşturulur
+CREATE TABLE tedarikci (
+    tedarikciID INT IDENTITY(1,1) PRIMARY KEY,
+    tedarikciAdi NVARCHAR(100),
+    tedarikciTuru NVARCHAR(100),
+    telefonNo NVARCHAR(20),
+    email NVARCHAR(100),
+    adres NVARCHAR(200)
+);
+GO
+
+-- Tedarikçi tablosu verileri eklenir.
+INSERT INTO tedarikci (tedarikciAdi, tedarikciTuru, telefonNo, email, adres) 
+VALUES
+('Savunma Sanayi A.Ş.', 'Silah', '03121112233', 'info@savunmasanayi.com', 'Ankara, Türkiye'),
+('Teknik Ekipman Ltd.', 'Ekipman', '02123334455', 'sales@teknikekipman.com', 'İstanbul, Türkiye'),
+('Askeri Giyim A.Ş.', 'Kıyafet', '02324445566', 'contact@askerigiyim.com', 'İzmir, Türkiye'),
+('Araç ve Yedek Parça Ltd.', 'Araç', '03225556677', 'support@aracyedekparca.com', 'Konya, Türkiye'),
+('Cephane Deposu A.Ş.', 'Cephane', '04226667788', 'info@cephanedeposu.com', 'Diyarbakır, Türkiye'),
+('Radar Sistemleri Ltd.', 'Radar', '03128889900', 'sales@radarsistemleri.com', 'Ankara, Türkiye'),
+('Gıda Lojistik A.Ş.', 'Gıda', '02129990011', 'support@gidalojistik.com', 'İstanbul, Türkiye'),
+('Tıbbi Malzeme Tic.', 'Tıbbi Malzeme', '03220000122', 'info@tibbimalzeme.com', 'Adana, Türkiye'),
+('Akaryakıt Dağıtım A.Ş.', 'Yakıt', '04121112233', 'sales@akaryakitdagitim.com', 'Gaziantep, Türkiye'),
+('Askeri Eğitim Malzemeleri Ltd.', 'Eğitim', '02223334455', 'contact@askeriegitim.com', 'Balıkesir, Türkiye'),
+('Tekstil ve Giyim A.Ş.', 'Kıyafet', '03334445566', 'info@tekstilgiyim.com', 'Kayseri, Türkiye'),
+('Arazi Ekipmanları Tic.', 'Ekipman', '04445556677', 'sales@araziekipman.com', 'Trabzon, Türkiye'),
+('Zırhlı Araç Ltd.', 'Araç', '05556667788', 'info@zirhliarac.com', 'Mersin, Türkiye'),
+('Antiseptik ve İlaç Ltd.', 'Tıbbi Malzeme', '06667778899', 'sales@antiseptik.com', 'Erzurum, Türkiye'),
+('Cephane ve Mühimmat A.Ş.', 'Cephane', '07778889900', 'info@cephanemuhimmat.com', 'Hakkari, Türkiye'),
+('Hava Sistemleri Tic.', 'Radar', '08889990011', 'contact@havasistemleri.com', 'Eskişehir, Türkiye'),
+('Dağcı ve Askeri Bot Ltd.', 'Kıyafet', '09990000122', 'sales@dagcibot.com', 'Van, Türkiye'),
+('İletişim Cihazları A.Ş.', 'Ekipman', '03121112244', 'info@iletisimcihaz.com', 'Ankara, Türkiye'),
+('Akaryakıt Ticaret Ltd.', 'Yakıt', '02123334466', 'support@akaryakit.com', 'İstanbul, Türkiye'),
+('Yiyecek Dağıtım A.Ş.', 'Gıda', '03224445577', 'sales@yiyecekdagitim.com', 'Adana, Türkiye'),
+('Mühendislik Hizmetleri Ltd.', 'Radar', '04335556688', 'info@muhendislik.com', 'Konya, Türkiye'),
+('Tıbbi İhtiyaçlar Tic.', 'Tıbbi Malzeme', '05446667799', 'contact@tibbi.com', 'Mardin, Türkiye'),
+('Eğitim Araçları A.Ş.', 'Eğitim', '06557778888', 'info@egitimaraclari.com', 'Kırklareli, Türkiye'),
+('Araç Lojistik Ltd.', 'Araç', '07668889999', 'sales@araclojistik.com', 'Çanakkale, Türkiye'),
+('Giyim ve Tekstil Tic.', 'Kıyafet', '03129990022', 'info@giyimtekstil.com', 'Aksaray, Türkiye'),
+('Askeri Çadır ve Ekipman A.Ş.', 'Ekipman', '02131112233', 'sales@askericadir.com', 'İstanbul, Türkiye'),
+('Cephane Lojistik Tic.', 'Cephane', '03233334455', 'contact@cephanelojistik.com', 'Manisa, Türkiye'),
+('Gece Görüş Ticaret Ltd.', 'Ekipman', '04334445566', 'info@gecegorus.com', 'Trabzon, Türkiye'),
+('Makarna ve Bakliyat Ltd.', 'Gıda', '05445556677', 'sales@makarnabakliyat.com', 'Bursa, Türkiye'),
+('Tıbbi Destek Hizmetleri Ltd.', 'Tıbbi Malzeme', '06556667788', 'contact@tibbidestek.com', 'Afyon, Türkiye'),
+('Zırhlı Araç Teknik Ltd.', 'Araç', '07667778899', 'sales@zirhliaracteknik.com', 'Mardin, Türkiye'),
+('Akaryakıt ve Lojistik A.Ş.', 'Yakıt', '03129990044', 'info@akaryakitlojistik.com', 'Niğde, Türkiye'),
+('Savunma Teknolojileri A.Ş.', 'Radar', '02131112255', 'contact@savunmateknolojileri.com', 'Ankara, Türkiye'),
+('Cephane ve Eğitim Ltd.', 'Cephane', '03234445566', 'info@cephaneegitim.com', 'Balıkesir, Türkiye'),
+('Gece Harekat Sistemleri A.Ş.', 'Ekipman', '04335556677', 'sales@geceharekat.com', 'Sakarya, Türkiye');
+
+-- TEDARİKÇİ TABLOSU BİTİŞ
+
+-- KIŞLA TABLOSU BAŞLANGIÇ
+
+-- Kışla tablosu oluşturulur.
+CREATE TABLE kisla (
+    kislaID INT IDENTITY(1,1) PRIMARY KEY,
+    kislaKapasite INT,
+    kislaAdi NVARCHAR(100),
+    kislaSehri NVARCHAR(100),
+    kislaKomutan NVARCHAR(100),
+    kislaBolge NVARCHAR(100)
+);
+GO
+
+-- Kışla tablosu verileri eklenir.
+INSERT INTO kisla ( kislaAdi, kislaSehri, kislaBolge, kislaKapasite, kislaKomutan)
+VALUES
+('Piyade Kışlası', 'Ankara', 'İç Anadolu', 1500, 'Albay Mehmet Yılmaz'),
+('Mekanize Piyade Kışlası', 'İstanbul', 'Marmara', 2000, 'Tuğgeneral Ali Şahin'),
+('Topçu Kışlası', 'İzmir', 'Ege', 1200, 'Yarbay Ahmet Kaya'),
+('Hava Savunma Kışlası', 'Eskişehir', 'İç Anadolu', 800, 'Albay Cem Yıldız'),
+('Tank Taburu Kışlası', 'Konya', 'İç Anadolu', 1000, 'Yarbay Hasan Demir'),
+('Zırhlı Tugay Kışlası', 'Diyarbakır', 'Güneydoğu Anadolu', 1800, 'Tuğgeneral Selim Eren'),
+('Komando Kışlası', 'Hakkari', 'Doğu Anadolu', 900, 'Yarbay Cengiz Kurt'),
+('Deniz Tugayı Kışlası', 'Mersin', 'Akdeniz', 1300, 'Albay Fuat Uysal'),
+('Hava Tugayı Kışlası', 'Adana', 'Akdeniz', 1100, 'Albay Yusuf İnce'),
+('Radar Üssü', 'Kars', 'Doğu Anadolu', 500, 'Binbaşı Murat Aydın'),
+('Eğitim Kışlası', 'Afyon', 'Ege', 1200, 'Albay Kemal Kara'),
+('Dağ Komando Tugayı', 'Tunceli', 'Doğu Anadolu', 800, 'Yarbay Haluk Şahin'),
+('Mühimmat Kışlası', 'Kayseri', 'İç Anadolu', 1400, 'Albay Taner Aktaş'),
+('Özel Kuvvetler Kışlası', 'Ankara', 'İç Anadolu', 600, 'Tuğgeneral Serdar Güney'),
+('Sınır Güvenlik Kışlası', 'Şırnak', 'Güneydoğu Anadolu', 700, 'Binbaşı Selahattin Turan'),
+('Tank Taburu', 'Edirne', 'Marmara', 1200, 'Albay Engin Polat'),
+('Sahil Güvenlik Komutanlığı', 'Trabzon', 'Karadeniz', 900, 'Yarbay Cihan Öztürk'),
+('Lojistik Kışlası', 'Malatya', 'Doğu Anadolu', 1000, 'Albay İsmail Güneş'),
+('Hava Üssü', 'Nevşehir', 'İç Anadolu', 800, 'Albay Ziya Çelik'),
+('Zırhlı Tümen Kışlası', 'Manisa', 'Ege', 1500, 'Tuğgeneral Adnan Yıldız'),
+('Hava Radar Üssü', 'Aksaray', 'İç Anadolu', 600, 'Binbaşı Mahmut Kaplan'),
+('Eğitim Tugayı', 'Kırklareli', 'Marmara', 1400, 'Albay Eren Koç'),
+('Komando Tugayı', 'Bitlis', 'Doğu Anadolu', 1000, 'Yarbay Ferhat Aksoy'),
+('Tank Eğitim Merkezi', 'Çanakkale', 'Marmara', 1100, 'Yarbay Selim Arslan'),
+('Topçu Taburu', 'Bursa', 'Marmara', 900, 'Albay Oğuz Demir'),
+('Deniz Üssü', 'Antalya', 'Akdeniz', 1600, 'Tuğgeneral Halil Bozkurt'),
+('Radar İzleme Merkezi', 'Muğla', 'Ege', 700, 'Binbaşı Serkan Bayram'),
+('İkmal Merkezi', 'Erzurum', 'Doğu Anadolu', 1300, 'Albay İbrahim Koç'),
+('Hava Kuvvetleri Üssü', 'Gaziantep', 'Güneydoğu Anadolu', 1200, 'Yarbay Metin Sağlam'),
+('Özel Kuvvetler Komutanlığı', 'Van', 'Doğu Anadolu', 800, 'Tuğgeneral Fikret Can'),
+('Dağ Komando Eğitim Merkezi', 'Isparta', 'Akdeniz', 1000, 'Yarbay Mehmet Sezer'),
+('Zırhlı Tugay Kışlası', 'Sakarya', 'Marmara', 1400, 'Albay Kamil Akın'),
+('Tank Eğitim Taburu', 'Tekirdağ', 'Marmara', 1100, 'Albay Serdar Yılmaz'),
+('Eğitim Üssü', 'Tokat', 'Karadeniz', 1200, 'Yarbay Veysel Kara'),
+('Komando Tugayı', 'Ağrı', 'Doğu Anadolu', 800, 'Albay Hasan Topçu'),
+('Deniz Kuvvetleri Komutanlığı', 'İzmit', 'Marmara', 1500, 'Tuğgeneral Cengiz Aslan'),
+('Sınır Taburu', 'Artvin', 'Karadeniz', 600, 'Binbaşı Selim Yalçın'),
+('Hava Radar Merkezi', 'Sivas', 'İç Anadolu', 900, 'Binbaşı Mehmet Kurt'),
+('Özel Kuvvetler Eğitim Üssü', 'Balıkesir', 'Ege', 800, 'Yarbay İrfan Aksoy'),
+('Hava Savunma Üssü', 'Kahramanmaraş', 'Akdeniz', 1100, 'Albay Halil Özdemir'),
+('Lojistik Komutanlığı', 'Niğde', 'İç Anadolu', 1200, 'Albay Hakan Uğur'),
+('Zırhlı Tugay', 'Kütahya', 'Ege', 1300, 'Tuğgeneral Ahmet Çevik'),
+('Komando Eğitim Merkezi', 'Sinop', 'Karadeniz', 900, 'Yarbay Ömer Yıldırım'),
+('Deniz Radar Merkezi', 'Zonguldak', 'Karadeniz', 700, 'Binbaşı Ferhat Gül'),
+('İkmal Kışlası', 'Hatay', 'Akdeniz', 1000, 'Albay Zafer Özkan'),
+('Tank Tümen Kışlası', 'Yalova', 'Marmara', 1400, 'Tuğgeneral Veli Polat'),
+('Hava Radar Kışlası', 'Amasya', 'Karadeniz', 800, 'Binbaşı İsmail Tüfek'),
+('Komando Tugayı', 'Ardahan', 'Doğu Anadolu', 1000, 'Albay Fikri Kaya'),
+('Deniz Eğitim Merkezi', 'Rize', 'Karadeniz', 700, 'Binbaşı Hüseyin Kaya'),
+('Hava Savunma Merkezi', 'Bolu', 'Karadeniz', 1200, 'Albay Kemal Aslan');
+
+-- KIŞLA TABLOSU BİTİŞ
+
+-- ENVANTER TABLOSU BAŞLANGIÇ
+
+-- Envanter Tablosu oluşturulur.
+CREATE TABLE envanter (
+    envanterID INT IDENTITY(1,1) PRIMARY KEY,
+    malzemeAdi NVARCHAR(100),
+    malzemeTuru NVARCHAR(100),
+    miktar INT,
+    kislaID INT,
+    FOREIGN KEY (kislaID) REFERENCES Kisla(kislaID)
+);
+GO
+
+-- Envanter tablosu verileri eklenir.
+INSERT INTO envanter ( malzemeAdi, malzemeTuru, miktar, kislaID) 
+VALUES
+('Tüfek', 'Silah', 200, 1),
+('Tabanca', 'Silah', 150, 2),
+('Keskin Nişancı Tüfeği', 'Silah', 30, 3),
+('El Bombası', 'Cephane', 500, 4),
+('Roketatar', 'Cephane', 40, 5),
+('Sis Bombası', 'Cephane', 100, 6),
+('Zırhlı Araç', 'Araç', 20, 7),
+('Tank', 'Araç', 15, 8),
+('Kamyon', 'Araç', 10, 9),
+('Arazi Aracı', 'Araç', 25, 10),
+('Telsiz', 'İletişim', 300, 11),
+('Radar Sistemi', 'Ekipman', 5, 12),
+('Balistik Kalkan', 'Ekipman', 50, 13),
+('Çelik Yelek', 'Ekipman', 200, 14),
+('Gece Görüş Gözlüğü', 'Ekipman', 100, 15),
+('Kask', 'Ekipman', 250, 16),
+('Kamuflaj Üniforma', 'Kıyafet', 500, 17),
+('Dağcı Botu', 'Kıyafet', 200, 18),
+('Yemek Konservesi', 'Gıda', 2000, 19),
+('Su Bidonu', 'Gıda', 1000, 20),
+('İlk Yardım Seti', 'Tıbbi Malzeme', 150, 21),
+('Serum', 'Tıbbi Malzeme', 100, 22),
+('Bandaj', 'Tıbbi Malzeme', 300, 23),
+('Antiseptik', 'Tıbbi Malzeme', 200, 24),
+('Motor Yağı', 'Araç Malzemesi', 50, 25),
+('Fren Balatası', 'Araç Malzemesi', 100, 26),
+('Lastik', 'Araç Malzemesi', 40, 27),
+('Benzin', 'Yakıt', 8000, 28),
+('Mazot', 'Yakıt', 7000, 29),
+('LPG', 'Yakıt', 5000, 30),
+('Makarna', 'Gıda', 3000, 31),
+('Pirinç', 'Gıda', 4000, 32),
+('Şeker', 'Gıda', 2500, 33),
+('Roket', 'Cephane', 30, 34),
+('Tabanca Mermisi', 'Cephane', 10000, 35),
+('Tüfek Mermisi', 'Cephane', 15000, 36),
+('Zırh Plakası', 'Ekipman', 150, 37),
+('Çadır', 'Ekipman', 40, 38),
+('Antibiyotik', 'Tıbbi Malzeme', 80, 39),
+('Kan Torbası', 'Tıbbi Malzeme', 50, 40);
+
+
+-- ENVANTER TABLOSU BİTİŞ
+
+-- PERSONEL TABLOSU BAŞLANGIÇ
+
+-- Personel tablosu oluşturulur.
+CREATE TABLE personel (
+    personelID INT IDENTITY(1,1) PRIMARY KEY,
+    adSoyad NVARCHAR(100),
+    rutbe NVARCHAR(50),
+    gorev NVARCHAR(100),
+    kislaID INT,
+    FOREIGN KEY (kislaID) REFERENCES Kisla(kislaID)
+);
+GO
+
+-- Personel tablosu verileri eklenir.
+INSERT INTO personel ( adSoyad, rutbe, gorev, kislaID) VALUES
+('Mehmet Kaya', 'Albay', 'Kışla Komutanı', 1),
+('Ali Yılmaz', 'Binbaşı', 'Mekanize Tabur Komutanı', 2),
+('Veli Demir', 'Yarbay', 'Topçu Tabur Komutanı', 3),
+('Cem Şahin', 'Binbaşı', 'Hava Savunma Subayı', 4),
+('Hasan Öz', 'Yarbay', 'Tank Taburu Komutanı', 5),
+('Selim Eren', 'Tuğgeneral', 'Zırhlı Tugay Komutanı', 6),
+('Cengiz Kurt', 'Yarbay', 'Komando Tabur Komutanı', 7),
+('Fuat Uysal', 'Albay', 'Deniz Tugayı Komutanı', 8),
+('Yusuf İnce', 'Albay', 'Hava Tugayı Komutanı', 9),
+('Murat Aydın', 'Binbaşı', 'Radar Üs Subayı', 10),
+('Kemal Kara', 'Albay', 'Eğitim Kışlası Komutanı', 11),
+('Haluk Şahin', 'Yarbay', 'Dağ Komando Tugayı Komutanı', 12),
+('Taner Aktaş', 'Albay', 'Mühimmat Kışlası Komutanı', 13),
+('Serdar Güney', 'Tuğgeneral', 'Özel Kuvvetler Komutanı', 14),
+('Selahattin Turan', 'Binbaşı', 'Sınır Güvenlik Subayı', 15),
+('Engin Polat', 'Albay', 'Tank Taburu Komutanı', 16),
+('Cihan Öztürk', 'Yarbay', 'Sahil Güvenlik Subayı', 17),
+('İsmail Güneş', 'Albay', 'Lojistik Komutanı', 18),
+('Ziya Çelik', 'Albay', 'Hava Üs Komutanı', 19),
+('Adnan Yıldız', 'Tuğgeneral', 'Zırhlı Tümen Komutanı', 20),
+('Mahmut Kaplan', 'Binbaşı', 'Hava Radar Subayı', 21),
+('Eren Koç', 'Albay', 'Eğitim Tugayı Komutanı', 22),
+('Ferhat Aksoy', 'Yarbay', 'Komando Tugayı Komutanı', 23),
+('Selim Arslan', 'Yarbay', 'Tank Eğitim Merkezi Subayı', 24),
+('Oğuz Demir', 'Albay', 'Topçu Taburu Komutanı', 25),
+('Halil Bozkurt', 'Tuğgeneral', 'Deniz Üs Komutanı', 26),
+('Serkan Bayram', 'Binbaşı', 'Radar İzleme Subayı', 27),
+('İbrahim Koç', 'Albay', 'İkmal Merkezi Komutanı', 28),
+('Metin Sağlam', 'Yarbay', 'Hava Kuvvetleri Subayı', 29),
+('Fikret Can', 'Tuğgeneral', 'Özel Kuvvetler Subayı', 30),
+('Mehmet Sezer', 'Yarbay', 'Dağ Komando Eğitim Subayı', 31),
+('Kamil Akın', 'Albay', 'Zırhlı Tugay Subayı', 32),
+('Serdar Yılmaz', 'Albay', 'Tank Eğitim Taburu Subayı', 33),
+('Veysel Kara', 'Yarbay', 'Eğitim Üssü Subayı', 34),
+('Hasan Topçu', 'Albay', 'Komando Tugayı Subayı', 35),
+('Cengiz Aslan', 'Tuğgeneral', 'Deniz Kuvvetleri Komutanı', 36),
+('Selim Yalçın', 'Binbaşı', 'Sınır Güvenlik Taburu Subayı', 37),
+('Mehmet Kurt', 'Binbaşı', 'Hava Radar Subayı', 38),
+('İrfan Aksoy', 'Yarbay', 'Özel Kuvvetler Eğitim Subayı', 39),
+('Halil Özdemir', 'Albay', 'Hava Savunma Subayı', 40),
+('Hakan Uğur', 'Albay', 'Lojistik Komutanı', 41),
+('Ahmet Çevik', 'Tuğgeneral', 'Zırhlı Tugay Komutanı', 42),
+('Ömer Yıldırım', 'Yarbay', 'Komando Eğitim Subayı', 43),
+('Ferhat Gül', 'Binbaşı', 'Deniz Radar Subayı', 44),
+('Zafer Özkan', 'Albay', 'İkmal Subayı', 45),
+('Veli Polat', 'Tuğgeneral', 'Tank Tümen Komutanı', 46),
+('İsmail Tüfek', 'Binbaşı', 'Hava Radar Subayı', 47),
+('Fikri Kaya', 'Albay', 'Komando Tugayı Komutanı', 48),
+('Hüseyin Kaya', 'Binbaşı', 'Deniz Eğitim Subayı', 49),
+('Kemal Aslan', 'Albay', 'Hava Savunma Subayı', 50);
+
+
+-- PERSONEL TABLOSU BİTİŞ
+
+-- EĞİTİM TABLOSU BAŞLANGIÇ
+
+-- Egitim tablosu oluşturulur.
+CREATE TABLE egitim (
+    egitimID INT IDENTITY(1,1)  PRIMARY KEY,
+    egitimAdi NVARCHAR(100),
+    baslangicTarihi DATE,
+    bitisTarihi DATE,
+    kislaID INT,
+    personelID INT,
+    FOREIGN KEY (kislaID) REFERENCES Kisla(kislaID),
+    FOREIGN KEY (personelID) REFERENCES Personel(personelID)
+);
+GO
+
+-- Eğitim tablosu verileri eklenir.
+INSERT INTO egitim ( egitimAdi, baslangicTarihi, bitisTarihi, kislaID, personelID) 
+VALUES('Temel Askerlik Eğitimi', '2024-01-01', '2024-01-15', 1, 1),
+('Tank Kullanımı Eğitimi', '2024-02-01', '2024-02-10', 2, 2),
+('Topçu Ateşleme Eğitimi', '2024-03-01', '2024-03-12', 3, 3),
+('Hava Savunma Eğitimi', '2024-04-01', '2024-04-10', 4, 4),
+('Zırhlı Araç Bakım Eğitimi', '2024-05-01', '2024-05-07', 5, 5),
+('Komando Eğitim Programı', '2024-06-01', '2024-06-15', 6, 6),
+('Deniz Güvenlik Eğitimi', '2024-07-01', '2024-07-10', 7, 7),
+('Hava Radar Kullanımı', '2024-08-01', '2024-08-08', 8, 8),
+('İlk Yardım Eğitimi', '2024-09-01', '2024-09-05', 9, 9),
+('Telsiz Kullanımı Eğitimi', '2024-10-01', '2024-10-06', 10, 10),
+('Gece Görüş Gözlüğü Eğitimi', '2024-11-01', '2024-11-07', 11, 11),
+('Radar İzleme Eğitimi', '2024-12-01', '2024-12-10', 12, 12),
+('Balistik Koruma Eğitimi', '2024-01-05', '2024-01-15', 13, 13),
+('Arazi Güvenliği Eğitimi', '2024-02-10', '2024-02-20', 14, 14),
+('Sınır Güvenliği Eğitimi', '2024-03-15', '2024-03-25', 15, 15),
+('Tank Ateşleme Eğitimi', '2024-04-05', '2024-04-15', 16, 16),
+('Sahil Güvenlik Eğitimi', '2024-05-20', '2024-05-30', 17, 17),
+('Lojistik Yönetimi Eğitimi', '2024-06-01', '2024-06-10', 18, 18),
+('Hava Güvenliği Eğitimi', '2024-07-01', '2024-07-10', 19, 19),
+('Zırhlı Araç Kullanımı', '2024-08-01', '2024-08-10', 20, 20),
+('Telsiz Operasyon Eğitimi', '2024-09-01', '2024-09-05', 21, 21),
+('İlk Yardım Uygulamaları', '2024-10-01', '2024-10-07', 22, 22),
+('Radar Kontrol Eğitimi', '2024-11-01', '2024-11-10', 23, 23),
+('Gece Harekat Eğitimi', '2024-12-01', '2024-12-12', 24, 24),
+('Mühimmat Depolama Eğitimi', '2025-01-01', '2025-01-07', 25, 25),
+('Deniz Operasyonu Eğitimi', '2025-02-01', '2025-02-10', 26, 26),
+('Zırhlı Araç Bakımı', '2025-03-01', '2025-03-07', 27, 27),
+('Telsiz Bakım Eğitimi', '2025-04-01', '2025-04-06', 28, 28),
+('Balistik Gözlük Eğitimi', '2025-05-01', '2025-05-05', 29, 29),
+('Bandaj Uygulamaları Eğitimi', '2025-06-01', '2025-06-08', 30, 30),
+('Gece Operasyon Eğitimi', '2025-07-01', '2025-07-10', 31, 31),
+('Tank Manevra Eğitimi', '2025-08-01', '2025-08-12', 32, 32),
+('Radar Kullanımı Eğitimi', '2025-09-01', '2025-09-08', 33, 33),
+('Sınır Gözetleme Eğitimi', '2025-10-01', '2025-10-10', 34, 34),
+('Hava Savunma Eğitimi', '2025-11-01', '2025-11-12', 35, 35),
+('Arazi Gözetleme Eğitimi', '2025-12-01', '2025-12-08', 36, 36),
+('Deniz Savunma Eğitimi', '2025-01-10', '2025-01-15', 37, 37),
+('Radar Operasyon Eğitimi', '2025-02-01', '2025-02-08', 38, 38),
+('İlk Yardım Teknikleri', '2025-03-01', '2025-03-05', 39, 39),
+('Tank Sürüş Eğitimi', '2025-04-01', '2025-04-08', 40, 40),
+('Hava Güvenlik Eğitimi', '2025-05-01', '2025-05-05', 41, 41),
+('Mühimmat Kullanımı Eğitimi', '2025-06-01', '2025-06-08', 42, 42),
+('Sahil Gözetleme Eğitimi', '2025-07-01', '2025-07-05', 43, 43),
+('Balistik Koruma Teknikleri', '2025-08-01', '2025-08-07', 44, 44),
+('Zırhlı Araç Uygulamaları', '2025-09-01', '2025-09-06', 45, 45),
+('Sınır Kontrol Eğitimi', '2025-10-01', '2025-10-10', 46, 46),
+('Gece Operasyon Teknikleri', '2025-11-01', '2025-11-05', 47, 47),
+('Hava Radar Operasyonu', '2025-12-01', '2025-12-08', 48, 48),
+('Mekanik Bakım Eğitimi', '2026-01-01', '2026-01-06', 49, 49),
+('Savunma Planlama Eğitimi', '2026-02-01', '2026-02-07', 50, 50);
+
+
+-- EĞİTİM TABLOSU BİTİŞİ
+
+-- VERİLEN TABLOSU BAŞLANGIÇ
+
+-- Verilen tablosu oluşturulur.
+CREATE TABLE verilen (
+    egitimID INT,
+    personelID INT,
+    egitmenAdi NVARCHAR(100),
+    egitmenRutbe NVARCHAR(50),
+    PRIMARY KEY (egitimID, personelID),
+    FOREIGN KEY (egitimID) REFERENCES Egitim(egitimID),
+    FOREIGN KEY (personelID) REFERENCES Personel(personelID)
+);
+GO
+
+-- Verilen tablosu verileri eklenir.
+INSERT INTO verilen (egitimID, personelID, egitmenAdi, egitmenRutbe)
+VALUES
+(1, 1, 'Yüzbaşı Ahmet Demir', 'Yüzbaşı'),
+(2, 2, 'Albay Mehmet Yılmaz', 'Albay'),
+(3, 3, 'Yarbay Ahmet Kaya', 'Yarbay'),
+(4, 4, 'Tuğgeneral Ali Şahin', 'Tuğgeneral'),
+(5, 5, 'Binbaşı Serkan Bayram', 'Binbaşı'),
+(6, 6, 'Albay Cem Yıldız', 'Albay'),
+(7, 7, 'Yarbay Hasan Demir', 'Yarbay'),
+(8, 8, 'Tuğgeneral Selim Eren', 'Tuğgeneral'),
+(9, 9, 'Yarbay Cengiz Kurt', 'Yarbay'),
+(10, 10, 'Albay Fuat Uysal', 'Albay'),
+(11, 11, 'Albay Yusuf İnce', 'Albay'),
+(12, 12, 'Binbaşı Murat Aydın', 'Binbaşı'),
+(13, 13, 'Yarbay Haluk Şahin', 'Yarbay'),
+(14, 14, 'Tuğgeneral Serdar Güney', 'Tuğgeneral'),
+(15, 15, 'Binbaşı Selahattin Turan', 'Binbaşı');
+
+-- VERİLEN TABLOSU BİTİŞ
+
+
+-- LOJİSTİK TABLOSU BAŞLANGIÇ
+
+-- Lojistik tablosu oluşturulur.
+CREATE TABLE lojistik (
+    lojistikID INT IDENTITY(1,1) PRIMARY KEY,
+    tedarikciID INT,
+    lojistikTuru NVARCHAR(100),
+	lojistikAdi NVARCHAR(100),
+    miktar INT,
+    teslimTarihi DATE,
+    kislaID INT,
+    FOREIGN KEY (tedarikciID) REFERENCES Tedarikci(tedarikciID),
+    FOREIGN KEY (kislaID) REFERENCES Kisla(kislaID)
+);
+GO
+
+-- Lojistik tablosu verileri eklenir.-- Lojistik tablosu verileri eklenir.
+INSERT INTO lojistik (lojistikAdi, lojistikTuru, miktar, teslimTarihi, kislaID) 
+VALUES
+('Tüfek Dağıtımı', 'Silah', 200, '2024-01-15', 5),
+('Tabanca Sevkiyatı', 'Silah', 150, '2024-01-20', 13),
+('Keskin Nişancı Tüfeği Transferi', 'Silah', 30, '2024-02-10', 9),
+('El Bombası Dağıtımı', 'Cephane', 500, '2024-02-15', 2),
+('Roketatar Sevkiyatı', 'Cephane', 40, '2024-02-20', 12),
+('Sis Bombası Transferi', 'Cephane', 100, '2024-02-25', 7),
+('Zırhlı Araç Teslimatı', 'Araç', 20, '2024-03-01', 3),
+('Tank Dağıtımı', 'Araç', 15, '2024-03-05', 16),
+('Kamyon Sevkiyatı', 'Araç', 10, '2024-03-10', 6),
+('Arazi Aracı Transferi', 'Araç', 25, '2024-03-15', 14),
+('Telsiz Teslimatı', 'İletişim', 300, '2024-04-01', 8),
+('Radar Sistemi Sevkiyatı', 'Ekipman', 5, '2024-04-05', 1),
+('Balistik Kalkan Transferi', 'Ekipman', 50, '2024-04-10', 11),
+('Çelik Yelek Dağıtımı', 'Ekipman', 200, '2024-04-15', 4),
+('Gece Görüş Gözlüğü Sevkiyatı', 'Ekipman', 100, '2024-04-20', 15),
+('Kask Transferi', 'Ekipman', 250, '2024-04-25', 18),
+('Kamuflaj Üniforma Teslimatı', 'Kıyafet', 500, '2024-05-01', 19),
+('Dağcı Botu Sevkiyatı', 'Kıyafet', 200, '2024-05-05', 10),
+('Yemek Konservesi Dağıtımı', 'Gıda', 2000, '2024-05-10', 17),
+('Su Bidonu Transferi', 'Gıda', 1000, '2024-05-15', 20),
+('İlk Yardım Seti Sevkiyatı', 'Tıbbi Malzeme', 150, '2024-05-20', 3),
+('Serum Teslimatı', 'Tıbbi Malzeme', 100, '2024-05-25', 6),
+('Bandaj Dağıtımı', 'Tıbbi Malzeme', 300, '2024-06-01', 5),
+('Antiseptik Transferi', 'Tıbbi Malzeme', 200, '2024-06-05', 12),
+('Motor Yağı Sevkiyatı', 'Araç Malzemesi', 50, '2024-06-10', 14),
+('Fren Balatası Teslimatı', 'Araç Malzemesi', 100, '2024-06-15', 8),
+('Lastik Dağıtımı', 'Araç Malzemesi', 40, '2024-06-20', 9),
+('Benzin Transferi', 'Yakıt', 8000, '2024-06-25', 7),
+('Mazot Teslimatı', 'Yakıt', 7000, '2024-06-30', 2),
+('LPG Sevkiyatı', 'Yakıt', 5000, '2024-07-01', 16);
+
+-- LOJİSTİK TABLOSU BİTİŞ
+
+-- SAĞLIK TABLOSU BAŞLANGIÇ
+
+-- Sağlık tablosu oluşturulur.
+CREATE TABLE saglik (
+    saglikID INT IDENTITY(1,1) PRIMARY KEY,
+    personelID INT,
+    saglikDurumu NVARCHAR(100),
+    muayeneTarihi DATE,
+    tedaviDurumu NVARCHAR(100),
+    kislaID INT,
+    FOREIGN KEY (personelID) REFERENCES Personel(personelID),
+    FOREIGN KEY (kislaID) REFERENCES Kisla(kislaID)
+);
+GO
+
+
+-- Sağlık tablosu verileri eklenir.
+INSERT INTO saglik ( personelID, saglikDurumu, muayeneTarihi, tedaviDurumu, kislaID) 
+VALUES
+(1, 'Sağlıklı', '2024-01-10', NULL, 1),
+(2, 'Hafif Yaralanma', '2024-01-15', 'Tedavi Edildi', 2),
+(3, 'Orta Derece Yaralanma', '2024-01-20', 'Tedavi Devam Ediyor', 3),
+(4, 'Sağlıklı', '2024-01-25', NULL, 4),
+(5, 'Kırık', '2024-02-01', 'Tedavi Ediliyor', 5),
+(6, 'Sağlıklı', '2024-02-05', NULL, 6),
+(7, 'Hafif Yaralanma', '2024-02-10', 'Tedavi Edildi', 7),
+(8, 'Psikolojik Destek Gerekiyor', '2024-02-15', 'Tedavi Ediliyor', 8),
+(9, 'Orta Derece Yaralanma', '2024-02-20', 'Tedavi Ediliyor', 9),
+(10, 'Sağlıklı', '2024-02-25', NULL, 10),
+(11, 'Hafif Yaralanma', '2024-03-01', 'Tedavi Edildi', 11),
+(12, 'Ciddi Hastalık', '2024-03-05', 'Tedavi Devam Ediyor', 12),
+(13, 'Sağlıklı', '2024-03-10', NULL, 13),
+(14, 'Hafif Yaralanma', '2024-03-15', 'Tedavi Edildi', 14),
+(15, 'Orta Derece Yaralanma', '2024-03-20', 'Tedavi Ediliyor', 15),
+(16, 'Sağlıklı', '2024-03-25', NULL, 16),
+(17, 'Psikolojik Sorunlar', '2024-04-01', 'Tedavi Devam Ediyor', 17),
+(18, 'Hafif Yaralanma', '2024-04-05', 'Tedavi Edildi', 18),
+(19, 'Kırık', '2024-04-10', 'Tedavi Ediliyor', 19),
+(20, 'Sağlıklı', '2024-04-15', NULL, 20),
+(21, 'Orta Derece Yaralanma', '2024-04-20', 'Tedavi Ediliyor', 21),
+(22, 'Hafif Yaralanma', '2024-04-25', 'Tedavi Edildi', 22),
+(23, 'Ciddi Hastalık', '2024-05-01', 'Tedavi Devam Ediyor', 23),
+(24, 'Sağlıklı', '2024-05-05', NULL, 24),
+(25, 'Hafif Yaralanma', '2024-05-10', 'Tedavi Edildi', 25);
+
+
+-- SAĞLIK TABLOSU BİTİŞ
+
+-- DİSİPLİN TABLOSU BAŞLANGIÇ
+
+-- Disiplin tablosu oluşturulur.
+CREATE TABLE disiplin (
+    disiplinID INT IDENTITY(1,1) PRIMARY KEY,
+    personelID INT,
+    disiplinDurumu NVARCHAR(100),
+    cezaTarihi DATE,
+    cezaAciklamasi NVARCHAR(500),
+    FOREIGN KEY (personelID) REFERENCES personel(personelID),
+);
+GO
+
+-- Disiplin tablosu verileri eklenir.
+INSERT INTO disiplin ( personelID, disiplinDurumu, cezaTarihi, cezaAciklamasi) 
+VALUES
+( 2, 'Disiplinsizlik', '2024-01-20', 'Görev saatlerine uymama'),
+( 4, 'Disiplinsizlik', '2024-02-25', 'Emre itaatsizlik'),
+( 6, 'Sorunsuz', NULL, NULL),
+( 8, 'Disiplinsizlik', '2024-04-15', 'Görevde dikkatsizlik'),
+( 10, 'Sorunsuz', NULL, NULL),
+( 12, 'Ağır Disiplinsizlik', '2024-06-10', 'Askeri araç kullanımında ihmal'),
+( 14, 'Sorunsuz', NULL, NULL),
+( 16, 'Disiplinsizlik', '2024-08-20', 'İzinsiz görev terk etme'),
+( 18, 'Sorunsuz', NULL, NULL),
+( 20, 'Disiplinsizlik', '2024-10-15', 'Kışla içinde uygunsuz davranış'),
+( 22, 'Sorunsuz', NULL, NULL),
+( 24, 'Disiplinsizlik', '2024-12-15', 'Ekipman eksik teslimi'),
+( 26, 'Sorunsuz', NULL, NULL),
+(28, 'Ağır Disiplinsizlik', '2025-02-10', 'Gizli bilgilere yetkisiz erişim'),
+( 30, 'Disiplinsizlik', '2025-03-15', 'Tatbikat sırasında emre uymama');
+
+-- DİSİPLİN TABLOSU BİTİŞ
+
+-- İZİN TABLOSU BAŞLANGIÇ
+
+-- Izin tablosu oluşturulur.
+CREATE TABLE izin (
+    izinID INT IDENTITY(1,1) PRIMARY KEY,
+    personelID INT,
+    izinBaslangic DATE,
+    izinBitis DATE,
+    izinSebebi NVARCHAR(500),
+    FOREIGN KEY (personelID) REFERENCES Personel(personelID)
+);
+GO
+
+-- İzin tablosu verileri eklenir.
+INSERT INTO izin ( personelID, izinBaslangic, izinBitis, izinSebebi) 
+VALUES
+( 1, '2024-01-05', '2024-01-10', 'Aile ziyareti'),
+( 3, '2024-02-01', '2024-02-07', 'Sağlık kontrolü'),
+( 5, '2024-02-15', '2024-02-20', 'Eğitim katılımı'),
+( 7, '2024-03-01', '2024-03-05', 'Ailevi nedenler'),
+( 9, '2024-03-20', '2024-03-25', 'Dinlenme'),
+( 1, '2024-04-01', '2024-04-05', 'Sağlık kontrolü'),
+(13, '2024-04-10', '2024-04-15', 'Eğitim katılımı'),
+( 15, '2024-05-01', '2024-05-07', 'Aile ziyareti'),
+( 17, '2024-05-15', '2024-05-20', 'Ailevi nedenler'),
+( 19, '2024-06-01', '2024-06-07', 'Dinlenme'),
+( 21, '2024-06-20', '2024-06-25', 'Sağlık kontrolü'),
+( 23, '2024-07-01', '2024-07-05', 'Tatbikat sonrası dinlenme'),
+( 25, '2024-07-15', '2024-07-20', 'Eğitim katılımı'),
+( 27, '2024-08-01', '2024-08-05', 'Aile ziyareti'),
+( 29, '2024-08-10', '2024-08-15', 'Ailevi nedenler'),
+( 2, '2024-09-01', '2024-09-07', 'Sağlık kontrolü'),
+( 4, '2024-09-20', '2024-09-25', 'Dinlenme'),
+( 6, '2024-10-01', '2024-10-05', 'Aile ziyareti'),
+( 8, '2024-10-15', '2024-10-20', 'Tatbikat sonrası dinlenme'),
+( 10, '2024-11-01', '2024-11-07', 'Sağlık kontrolü');
+
+-- İZİN TABLOSU BİTİŞ
+
+-- TATBİKAT TABLOSU BAŞLANGIÇ
+
+-- Tatbikat tablosu oluşturulur.
+CREATE TABLE tatbikat (
+    tatbikatID INT IDENTITY(1,1) PRIMARY KEY,
+    tatbikatAdi NVARCHAR(100),
+    baslangicTarihi DATE,
+    bitisTarihi DATE,
+    personelID INT,
+    FOREIGN KEY (personelID) REFERENCES Personel(personelID)
+);
+GO
+
+-- Tatbikat tablosu verileri eklenir.
+INSERT INTO tatbikat ( tatbikatAdi, baslangicTarihi, bitisTarihi, personelID) VALUES
+('Gece Operasyonu Tatbikatı', '2024-01-10', '2024-01-15', 2),
+( 'Sınır Güvenlik Tatbikatı', '2024-02-05', '2024-02-10', 5),
+( 'Tank Manevra Tatbikatı', '2024-03-01', '2024-03-07', 8),
+( 'Zırhlı Araç Tatbikatı', '2024-04-10', '2024-04-15', 11),
+('Hava Savunma Tatbikatı', '2024-05-01', '2024-05-05', 13),
+('Deniz Güvenlik Tatbikatı', '2024-06-01', '2024-06-07', 16),
+('Radar Kullanımı Tatbikatı', '2024-07-10', '2024-07-15', 18),
+('İlk Yardım Tatbikatı', '2024-08-01', '2024-08-05', 20),
+('Mühimmat Depolama Tatbikatı', '2024-09-01', '2024-09-05', 22),
+( 'Dağ Komando Tatbikatı', '2024-10-01', '2024-10-07', 25),
+( 'Sahil Güvenlik Tatbikatı', '2024-11-01', '2024-11-07', 28),
+( 'Gece Görüş Tatbikatı', '2024-12-01', '2024-12-06', 30),
+( 'Balistik Koruma Tatbikatı', '2025-01-01', '2025-01-05', 3),
+( 'Psikolojik Destek Tatbikatı', '2025-02-01', '2025-02-06', 6),
+( 'Arazi Güvenlik Tatbikatı', '2025-03-01', '2025-03-05', 9);
+
+-- TATBİKAT TABLOSU BİTİŞİ
+
+-- KATILDIĞI TABLOSU BAŞLANGIÇ
+
+-- Katıldığı tablosu oluşturulur.
+CREATE TABLE katıldığı (
+    personelID INT,
+    tatbikatID INT,
+    tatbikatTuru NVARCHAR(100),
+    PRIMARY KEY (personelID, tatbikatID),
+    FOREIGN KEY (personelID) REFERENCES Personel(personelID),
+    FOREIGN KEY (tatbikatID) REFERENCES Tatbikat(tatbikatID)
+);
+GO
+
+-- Katıldığı tablosu verileri eklenir.
+INSERT INTO katıldığı (personelID, tatbikatID, tatbikatTuru)
+VALUES
+(1, 1, 'Kışla Tatbikatı'),
+(2, 2, 'Açık Hava Tatbikatı'),
+(3, 3, 'Savaş Tatbikatı'),
+(4, 4, 'Komando Tatbikatı'),
+(5, 5, 'Lojistik Tatbikatı'),
+(6, 6, 'Topçu Tatbikatı'),
+(7, 7, 'Ağır Silah Tatbikatı'),
+(8, 8, 'İç Güvenlik Tatbikatı'),
+(9, 9, 'Hava Savunma Tatbikatı'),
+(10, 10, 'Zırhlı Araç Tatbikatı'),
+(11, 11, 'Deniz Tatbikatı'),
+(12, 12, 'Sınır Güvenliği Tatbikatı'),
+(13, 13, 'Arama Kurtarma Tatbikatı'),
+(14, 14, 'Komando Eğitimi Tatbikatı'),
+(15, 15, 'Dağcı Tatbikatı');
+
+-- KATILDIĞI TABLOSU BİTİŞ
+

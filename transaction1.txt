@@ -1,0 +1,54 @@
+-- Bu transaction, Personel tablosunda belirtilen personelID'nin var olup olmadığını kontrol eder.
+-- Eğer personelID bulunmazsa, Personel tablosuna yeni bir personel kaydı ekler.
+-- Ardından, Disiplin tablosuna yeni bir disiplin kaydı ekler, en son eklenen DisiplinID'yi tespit eder ve bir fazlasını kullanır.
+-- Eğer herhangi bir hata oluşursa, yapılan değişiklikler geri alınır.
+
+BEGIN TRANSACTION;
+
+BEGIN TRY
+    DECLARE @nextDisiplinID INT; -- Eklenecek yeni DisiplinID'yi tutacak değişken
+
+    -- 1. Adım: Personel tablosunda personelID = 101 var mı diye kontrol et
+    IF NOT EXISTS (SELECT 1 FROM Personel WHERE personelID = 101)
+    BEGIN
+        -- Eğer yoksa, Personel tablosuna personel ekle. Burada personelID otomatik artacaktır, manuel olarak eklemiyoruz.
+        INSERT INTO Personel (adSoyad, rutbe, gorev, kislaID)
+        VALUES ('Ahmet Yılmaz', 'Astsubay', 'Görevli', 1);
+    END
+
+    -- 2. Adım: Mevcut en büyük DisiplinID değerini bul ve bir fazlasını hesapla
+    SELECT @nextDisiplinID = ISNULL(MAX(disiplinID), 0) + 1
+    FROM Disiplin;
+
+    -- 3. Adım: IDENTITY_INSERT özelliğini aktif hale getir
+    SET IDENTITY_INSERT Disiplin ON;
+
+    -- 4. Adım: Disiplin tablosuna yeni bir kayıt ekle
+    INSERT INTO Disiplin (disiplinID, personelID, disiplinDurumu, cezaTarihi, cezaAciklamasi)
+    VALUES (@nextDisiplinID, 1, 'Uyarı', GETDATE(), 'Görev ihmalinden dolayı disiplin cezası');
+
+    -- 5. Adım: IDENTITY_INSERT özelliğini devre dışı bırak
+    SET IDENTITY_INSERT Disiplin OFF;
+
+    -- 6. Adım: İzin tablosundaki aktif izinler siliniyor
+    DELETE FROM izin
+    WHERE personelID = 1 AND izinBaslangic <= GETDATE() AND izinBitis >= GETDATE();
+
+    -- İşlemler başarıyla tamamlandığında değişiklikleri kaydet
+    COMMIT TRANSACTION;
+
+    PRINT 'Transaction başarıyla tamamlandı. Yeni eklenen Disiplin ID: ' + CAST(@nextDisiplinID AS NVARCHAR(50));
+END TRY
+BEGIN CATCH
+    -- Hata oluşursa, tüm değişiklikleri geri al
+    ROLLBACK TRANSACTION;
+
+    -- IDENTITY_INSERT özelliğini kapatmayı unutmayın (hata durumunda bile)
+    IF (OBJECTPROPERTY(OBJECT_ID('Disiplin'), 'TableHasIdentity') = 1)
+    BEGIN
+        SET IDENTITY_INSERT Disiplin OFF;
+    END
+
+    -- Hata mesajını yazdır
+    PRINT 'Transaction başarısız oldu. Hata: ' + ERROR_MESSAGE();
+END CATCH;

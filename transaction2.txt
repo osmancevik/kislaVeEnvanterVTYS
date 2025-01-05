@@ -1,0 +1,50 @@
+-- Bu transaction, Komando Eğitim Programı'nı Eğitim tablosuna ekler ve Verilen tablosuna personel ilişkilendirir.
+-- PersonelID ile eşleşen personel 'Albay' veya 'Yarbay' değilse, hata mesajı gösterilir.
+
+BEGIN TRANSACTION;
+
+BEGIN TRY
+    -- 1. Adım: Manuel olarak eğitim adını tanımlıyoruz
+    DECLARE @egitimAdi NVARCHAR(255) = 'Komando Eğitim Programı';
+    DECLARE @baslangicTarihi DATETIME = GETDATE();  -- Eğitim başlangıç tarihi
+    DECLARE @bitisTarihi DATETIME = DATEADD(DAY, 7, GETDATE()); -- Eğitim bitiş tarihi (7 gün sonra)
+    DECLARE @personelID INT = 2; -- Eklenecek personelID (bu değeri manuel olarak değiştirebilirsiniz)
+    DECLARE @personelRutbe NVARCHAR(50); -- Personel rutbesi
+    DECLARE @egitimID INT; -- Eğitim ID'si
+    DECLARE @kislaID INT = 1; -- KislaID (Bu örnekte sabit bir değer kullanıyoruz)
+
+    -- 2. Adım: Personelin rutbesini kontrol et
+    SELECT @personelRutbe = rutbe
+    FROM Personel
+    WHERE personelID = @personelID;
+
+    -- 3. Adım: Eğer personel 'Albay' veya 'Yarbay' değilse, hata mesajı ver ve transaction'ı iptal et
+    IF @personelRutbe NOT IN ('Albay', 'Yarbay')
+    BEGIN
+        -- Hata mesajı ver, işlem yapma
+        THROW 50000, 'Albay veya Yarbay seçilmelidir', 1;
+    END
+
+    -- 4. Adım: Eğitim programını Egitim tablosuna ekle
+    INSERT INTO Egitim (egitimAdi, baslangicTarihi, bitisTarihi, kislaID, personelID)
+    VALUES (@egitimAdi, @baslangicTarihi, @bitisTarihi, @kislaID, @personelID);
+
+    -- Eğitim ID'sini almak
+    SELECT @egitimID = SCOPE_IDENTITY();
+
+    -- 5. Adım: Verilen tablosuna, eğitim ile personel ilişkilendirilir
+    INSERT INTO Verilen (egitimID, personelID, egitmenAdi, egitmenRutbe)
+    VALUES (@egitimID, @personelID, 'Eğitmen Adı', 'Eğitmen Rutbesi'); -- Eğitmen bilgileri burada manuel olarak girilmelidir
+
+    -- 6. Adım: Eğitim ve ilişki başarılıysa, transaction'ı commit et
+    COMMIT TRANSACTION;
+
+    PRINT 'Komando Eğitim Programı başarıyla eklendi ve Verilen tablosuna ilişkilendirildi.';
+END TRY
+BEGIN CATCH
+    -- Hata durumunda transaction'ı geri al
+    ROLLBACK TRANSACTION;
+
+    -- Hata mesajını yazdır
+    PRINT 'Transaction başarısız oldu. Hata: ' + ERROR_MESSAGE();
+END CATCH;

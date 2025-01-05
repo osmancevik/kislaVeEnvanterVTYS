@@ -1,0 +1,11 @@
+-- Kışla Bölgesi Güneydoğu Anadolu olan kışlaların sahip olduğu malzemelerin adını ve miktarını getiren kod.
+
+SELECT 
+    e.malzemeAdi, 
+    e.miktar
+FROM 
+    Envanter e
+JOIN 
+    kisla k ON e.kislaID = k.kislaID
+WHERE 
+    k.kislaBolge = 'Güneydoğu Anadolu';
