@@ -1,6 +1,6 @@
-Osman Çevik - 205260044
-Muhammed Ali Işık - 205260010
-Cihan Kara - 205260040
+- Osman Çevik - 205260044
+- Muhammed Ali Işık - 205260010
+- Cihan Kara - 205260040
 
 # Kışla ve Envanter Veritabanı
 
